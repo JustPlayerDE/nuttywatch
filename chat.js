@@ -91,7 +91,7 @@ if (testing) {
     endpoint: "streams",
     qs: {
       limit: 3,
-      language: "de",
+      language: "en",
     },
   }).then(({ streams }) => {
     client = new tmi.client({
@@ -196,13 +196,13 @@ function addListeners() {
   client.on("followersonly", (channel, enabled, length) => {
     if (enabled) {
       showAdminMessage({
-        message: "Nur-Follower-Modus wurde aktiviert",
+        message: "Follower-Only Mode Enabled",
         attribs: { subtype: "followersonly" },
         timeout: 0,
       });
     } else {
       showAdminMessage({
-        message: "Follower-Only wurde Deaktiviert.",
+        message: "Follower-Only Mode Disabled",
         attribs: { subtype: "nofollowersonly" },
         timeout: 1000,
       });
@@ -240,8 +240,8 @@ function addListeners() {
   client.on("clearchat", (channel) => {
     removeChatLine({ channel });
     showAdminMessage({
-      message: "Chat Geleert.",
-      timeout: 3000,
+      message: "Chat was emptied.",
+      timeout: 5000,
     });
 
     localStorage.setItem("log", JSON.stringify({
@@ -252,7 +252,7 @@ function addListeners() {
 
   client.on("raided", (channel, username, viewers) => {
     showAdminMessage({
-      message: username + " hat uns mit " + viewers + " zuschauern geraided!",
+      message: username + " raided us with " + viewers + " viewers!",
       timeout: 30000,
     });
   });
