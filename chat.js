@@ -26,7 +26,7 @@ function pushLog(item) {
   chatLog?.chat?.push(item);
 
   if (chatLog?.chat?.length > 30) {
-    chatLog.chat.shift()
+    //chatLog.chat.shift() // test without limit for now
   }
 
   localStorage.setItem("log", JSON.stringify({
