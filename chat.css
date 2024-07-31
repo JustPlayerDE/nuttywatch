@@ -45,7 +45,7 @@ body {
   gap: 0.4rem;
   margin-bottom: auto;
   margin-top: auto;
-  max-height: 90svh;
+  height: 90svh;
 }
 
 .chat-line {
