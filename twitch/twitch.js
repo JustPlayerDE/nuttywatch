@@ -136,7 +136,7 @@ function addListeners() {
   client.on("connected", () => {
     //getBTTVEmotes();
     showAdminMessage({
-      message: "Connected to Twitch!",
+      message: "Connected to Twitch for " + streamer,
       attribs: { subtype: "connected" },
       timeout: 1000,
     });
