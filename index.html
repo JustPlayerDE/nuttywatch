@@ -148,9 +148,9 @@
 
       let socket;
       const eventHandler = {
-        "obs-chat": function (event) {
+        "nuttywatch-chat": function (event) {
           console.debug(["Successfully Subscribed to Streamerbot", event]);
-          addSystemMessage("status-obs", "Subscribed to Events!");
+          addSystemMessage("status-events", "Subscribed to Events!");
         },
         Twitch: function (event) {
           console.debug(event);
@@ -221,15 +221,16 @@
         socket.onopen = () => {
           let s = {
             request: "Subscribe",
-            id: "obs-chat",
+            id: "nuttywatch-chat",
             events: streamerbot.events,
           };
 
           socket.send(JSON.stringify(s));
+          console.log(JSON.stringify(s))
 
           console.debug(["Connected to Streamer.Bot:", socket]);
           addSystemMessage("status", "Connected to Streamer.bot!");
-          addSystemMessage("status-obs", "Waiting for event subscription...", false);
+          addSystemMessage("status-events", "Waiting for event subscription...", false);
           streamerbot.isConnected = true;
         };
 
