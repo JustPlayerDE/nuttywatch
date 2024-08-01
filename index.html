@@ -235,6 +235,7 @@
           console.warn(
             "Disconnected from Streamer.Bot, reconnecting in 10 seconds..."
           );
+          addSystemMessage("status", "Connection lost...", false);
           streamerbot.isConnected = false;
           setTimeout(sbConnect, 10000);
         };
