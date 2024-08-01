@@ -16,7 +16,7 @@ The streamerbot version supports Twitch and Youtube chat, but it requires an uns
 
 If you don't know how to self-host or bypass the HTTPS mixed content restrictions, you can use the unsecured version here:
 
-http://nuttychat.justplayer.de/streamerbot.html#socket=127.0.0.1:8080
+http://nuttywatch.justplayer.de/streamerbot.html#socket=127.0.0.1:8080
 
 Just replace the IP with the IP of the device in your local network where streamerbot is running on.
 
