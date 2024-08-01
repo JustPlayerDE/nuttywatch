@@ -7,18 +7,22 @@ You can use the Twitch only version like this:
 
 Example: https://justplayerde.github.io/nuttywatch/?streamer=nutty
 
-> The Twitch only version may not be supported in the future, i recommend using the streamerbot version as it just works better and allows more features in the future.
+> I recommend using the streamerbot version as it just works better and allows more features in the future.
 
 
 ## Streamerbot Version
 
 The streamerbot version supports Twitch and Youtube chat, but it requires an unsecured websocket connection to work.
 
-If you don't know how to self-host or bypass the HTTPS mixed content restrictions, you can use the unsecured version here:
+If you don't know how to self-host or how to bypass the HTTPS mixed content restrictions, you can use the unsecured version here:
 
 http://nuttywatch.justplayer.de/streamerbot.html#socket=127.0.0.1:8080
 
-Just replace the IP with the IP of the device in your local network where streamerbot is running on.
+
+By default Streamer.bot will only listen on local connections, to make the chat connect from other devices (e.g. your smartwatch) you have to define another websocket server in `Server/Clients > Websocket Servers`.
+Do not change the main websocket server settings as they are required for your local widgets and obs sources to connect to your local streamerbot instance.
+
+![Streamer.bot websocket server settings example](assets/streamerbot_websocket_server_config.png?raw=true "Example of the Websocket server settings you can use.")
 
 > I do not collect nor do i use any data about you or your chat. But please keep in mind that i technically have full access to your Streamerbot instance if you use the version hosted on my own domain. I recommend hosting the files yourself on a local server instead.
 
