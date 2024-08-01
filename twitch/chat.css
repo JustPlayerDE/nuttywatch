@@ -1,0 +1,107 @@
+/* Include this in the HTML head section for better performance
+<link href="https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap" rel="stylesheet">
+*/
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+::before,
+::after {
+  box-sizing: inherit;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  background: black;
+  color: white;
+  font-family: 'Ropa Sans', sans-serif;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  animation: fadeIn 2s ease 1 forwards;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+#chat {
+  position: absolute;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+
+  margin: 1rem auto;
+  padding: 2rem;
+}
+
+.chat-line {
+  overflow: hidden;
+  max-height: 0;
+  transition: opacity 2s, max-height 1s, margin-top 1s;
+  border-radius: 0.25em;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+.chat-line.visible {
+  max-height: 60rem;
+  transition: opacity 2s, max-height 1s, margin-top 300ms;
+}
+
+
+
+.chat-line .chat-line-inner {
+  background-color: rgba(31, 31, 31, 0.77);
+  padding: 0.5rem;
+  overflow-wrap: break-word;
+}
+
+.chat-line .chat-line-inner .badges img.badge {
+  margin-right: 0.5em;
+  vertical-align: text-bottom;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.chat-line .chat-line-inner img.emote {
+  margin-right: 0.5em;
+  vertical-align: text-bottom;
+  width: 1.1em;
+  height: 1.1em;
+}
+
+.chat-line .chat-line-inner.admin .message {
+  opacity: 0.1;
+}
+
+.user-name {
+  color: #ff6bb5;
+  font-weight: bolder;
+  mix-blend-mode: difference;
+}
+
+.message img {
+  vertical-align: text-bottom;
+}
+
+.message img.emoji {
+  width: 1.8rem;
+}
+
+.blurred {
+  filter: blur(0.3rem);
+}

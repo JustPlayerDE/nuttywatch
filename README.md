@@ -3,9 +3,9 @@
 This is primarily a prototype.
 
 You can use the Twitch only version like this:
-`https://justplayerde.github.io/nuttywatch/?streamer=<YOUR TWITCH NAME>`
+`https://justplayerde.github.io/nuttywatch/twitch/?streamer=<YOUR TWITCH NAME>`
 
-Example: https://justplayerde.github.io/nuttywatch/?streamer=nutty
+Example: https://justplayerde.github.io/nuttywatch/twitch/?streamer=nutty
 
 > I recommend using the streamerbot version as it just works better and allows more features in the future.
 
@@ -16,7 +16,7 @@ The streamerbot version supports Twitch and Youtube chat, but it requires an uns
 
 If you don't know how to self-host or how to bypass the HTTPS mixed content restrictions, you can use the unsecured version here:
 
-http://nuttywatch.justplayer.de/streamerbot.html#socket=127.0.0.1:8080
+http://nuttywatch.justplayer.de/#socket=127.0.0.1:8080
 
 
 By default Streamer.bot will only listen on local connections, to make the chat connect from other devices (e.g. your smartwatch) you have to define another websocket server in `Server/Clients > Websocket Servers`.

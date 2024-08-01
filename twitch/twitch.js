@@ -135,9 +135,8 @@ function addListeners() {
 
   client.on("connected", () => {
     //getBTTVEmotes();
-    getBadges().then((badges) => (twitchBadgeCache.data.global = badges));
     showAdminMessage({
-      message: "Connected!",
+      message: "Connected to Twitch!",
       attribs: { subtype: "connected" },
       timeout: 1000,
     });
@@ -150,7 +149,7 @@ function addListeners() {
     twitchBadgeCache.data = { global: {} };
     bttvEmoteCache.data = { global: [] };
     showAdminMessage({
-      message: "Disconnected :O",
+      message: "Disconnected from Twitch :O",
       attribs: { subtype: "disconnected" },
     });
 
@@ -569,13 +568,6 @@ async function twitchNameToUser(username) {
 
   console.log(user);
   return user;
-}
-
-function getBadges(channel) {
-  return fetch("api/badges.php")
-    .then(response => {
-      return response.json()
-    })
 }
 
 function getClip(clipSlug) {
