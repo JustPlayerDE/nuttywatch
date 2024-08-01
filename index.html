@@ -344,6 +344,28 @@
         function () {
           console.info("Document loaded, connecting to streamerbot...");
           sbConnect();
+
+          if(params.test) {
+            addSystemMessage("test", "Testing is enabled, adding random messages.", false)
+
+          
+            function randomMessage() {
+              addMessage(
+                (Math.random() + 1).toString(36).substring(7),
+                "This is some text",
+                {
+                  name: "Bot",
+                  id: 0,
+                },
+                null,
+                []
+              );
+
+              setTimeout(randomMessage, Math.floor(Math.random() * 3000))
+            }
+
+            randomMessage();
+          }
         },
         false
       );
