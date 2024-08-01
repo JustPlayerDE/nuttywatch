@@ -18,7 +18,7 @@
       const chatContainer = document.getElementById("chat");
       let enableAutoScroll = true;
       let requiresScrolling = 0;
-      
+
       // https://stackoverflow.com/a/44169739
       const hash = window.location.hash.substr(1);
       const params = hash.split("&").reduce(function (res, item) {
@@ -74,7 +74,7 @@
       }
 
       setInterval(() => {
-        if (requiresScrolling > 0 && enableAutoScroll) {
+        if (requiresScrolling > 0) {
           requiresScrolling--;
           scrollToBottom();
         }
