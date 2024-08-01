@@ -18,10 +18,10 @@
 
       // https://stackoverflow.com/a/44169739
       const hash = window.location.hash.substr(1);
-      const params = hash.split('&').reduce(function (res, item) {
-          var parts = item.split('=');
-          res[parts[0]] = parts[1];
-          return res;
+      const params = hash.split("&").reduce(function (res, item) {
+        var parts = item.split("=");
+        res[parts[0]] = parts[1];
+        return res;
       }, {});
 
       const streamerbot = {
@@ -214,6 +214,7 @@
       };
 
       function sbConnect() {
+        addSystemMessage("status", "Connecting...", false);
         socket = new WebSocket(streamerbot.remoteAddress);
 
         socket.onopen = () => {
@@ -254,7 +255,6 @@
         "DOMContentLoaded",
         function () {
           console.info("Document loaded, connecting to streamerbot...");
-          addSystemMessage("status", "Connecting...", false);
           sbConnect();
         },
         false
