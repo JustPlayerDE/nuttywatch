@@ -150,6 +150,7 @@
       const eventHandler = {
         "obs-chat": function (event) {
           console.debug(["Successfully Subscribed to Streamerbot", event]);
+          addSystemMessage("status-obs", "Subscribed to Events!");
         },
         Twitch: function (event) {
           console.debug(event);
@@ -227,7 +228,8 @@
           socket.send(JSON.stringify(s));
 
           console.debug(["Connected to Streamer.Bot:", socket]);
-          addSystemMessage("status", "Connected to Streamerbot!");
+          addSystemMessage("status", "Connected to Streamer.bot!");
+          addSystemMessage("status-obs", "Waiting for event subscription...", false);
           streamerbot.isConnected = true;
         };
 
