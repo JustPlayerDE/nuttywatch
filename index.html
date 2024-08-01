@@ -14,6 +14,7 @@
     <div id="chat"></div>
 
     <script>
+      // Inspired by https://github.com/izzy/stream-chat
       const chatContainer = document.getElementById("chat");
 
       // https://stackoverflow.com/a/44169739
@@ -47,6 +48,42 @@
           .querySelectorAll("#" + messageId)
           .forEach((n) => chatContainer.removeChild(n));
       }
+
+      function htmlentities(str) {
+          return str.replace(/[\u00A0-\u9999<>\&]/gim, (i) => {
+              return '&#' + i.charCodeAt(0) + ';';
+          });
+      }
+
+      function replaceWithEmotes(text, emotes) {
+          // Sort emotes by startIndex in descending order to avoid messing up indices
+          emotes.sort((a, b) => b.startIndex - a.startIndex);
+
+          // Initialize an array to hold parts of the final string
+          let parts = [];
+          let lastIndex = text.length;
+
+          // Process each emote
+          emotes.forEach(emote => {
+              const startIndex = emote.startIndex;
+              const endIndex = emote.endIndex;
+              const imageUrl = emote.imageUrl;
+
+              // Push the text after the current emote
+              parts.unshift(htmlentities(text.slice(endIndex + 1, lastIndex)));
+              // Push the image tag
+              parts.unshift(`<img src="${imageUrl}" alt="${emote.name}">`);
+              // Update the lastIndex to the start of the current emote
+              lastIndex = startIndex;
+          });
+
+          // Add the remaining part of the text before the first emote
+          parts.unshift(htmlentities(text.slice(0, lastIndex)));
+
+          // Join all parts to form the final string
+          return parts.join('');
+      }
+
 
       function addMessage(
         id,
@@ -91,7 +128,7 @@
 
           const messageElement = document.createElement("span");
           messageElement.classList.add("message");
-          messageElement.innerText = message;
+          messageElement.innerHTML = message;
 
           messageContainer.setAttribute("data-user-id", author.id);
 
@@ -160,10 +197,16 @@
             console.groupCollapsed("Chat Message");
             const chatMessage = event.data.message;
             console.debug(chatMessage);
+            let messageText = htmlentities(chatMessage.message);
+            
+            if(chatMessage.emotes.length > 0) {
+              messageText = replaceWithEmotes(chatMessage.message, chatMessage.emotes)
+            }
+
 
             addMessage(
               chatMessage.msgId,
-              chatMessage.message,
+              messageText,
               {
                 name: chatMessage.username,
                 id: chatMessage.userId,
@@ -186,11 +229,10 @@
           if (event.event.type === "Message") {
             console.groupCollapsed("Chat Message");
             const chatMessage = event.data.message;
-            console.debug(chatMessage);
 
             addMessage(
               chatMessage.eventId,
-              chatMessage.message,
+              htmlentities(chatMessage.message),
               {
                 name: chatMessage.user.name,
                 id: chatMessage.user.id,
@@ -226,11 +268,15 @@
           };
 
           socket.send(JSON.stringify(s));
-          console.log(JSON.stringify(s))
+          console.log(JSON.stringify(s));
 
           console.debug(["Connected to Streamer.Bot:", socket]);
           addSystemMessage("status", "Connected to Streamer.bot!");
-          addSystemMessage("status-events", "Waiting for event subscription...", false);
+          addSystemMessage(
+            "status-events",
+            "Waiting for event subscription...",
+            false
+          );
           streamerbot.isConnected = true;
         };
 
