@@ -49,15 +49,13 @@
           const rect = element.getBoundingClientRect();
           const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
 
-          return rect.bottom <= viewportHeight;
+          return rect.bottom <= (viewportHeight * 1.05); // Allow 5% leeway
       }
 
       window.addEventListener('scroll', () => {
           if (isElementBottomInViewport(chatContainer)) {
-              console.log("The bottom of the div is in the viewport.");
               enableAutoScroll = true;
           } else {
-              console.log("The bottom of the div is not in the viewport.");
               enableAutoScroll = false;
           }
       });
@@ -306,7 +304,6 @@
           };
 
           socket.send(JSON.stringify(s));
-          console.log(JSON.stringify(s));
 
           console.debug(["Connected to Streamer.Bot:", socket]);
           addSystemMessage("status", "Connected to Streamer.bot!");
