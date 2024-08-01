@@ -2,14 +2,6 @@
 
 This is primarily a prototype.
 
-You can use the Twitch only version like this:
-`https://justplayerde.github.io/nuttywatch/twitch/?streamer=<YOUR TWITCH NAME>`
-
-Example: https://justplayerde.github.io/nuttywatch/twitch/?streamer=nutty
-
-> I recommend using the streamerbot version as it just works better and allows more features in the future.
-
-
 ## Streamerbot Version
 
 The streamerbot version supports Twitch and Youtube chat, but it requires an unsecured websocket connection to work.
@@ -27,3 +19,10 @@ Do not change the main websocket server settings as they are required for your l
 > I do not collect nor do i use any data about you or your chat. But please keep in mind that i technically have full access to your Streamerbot instance if you use the version hosted on my own domain. I recommend hosting the files yourself on a local server instead.
 
 > Funfact: Everything after # in a url is clientside only and never sent to the server, that way - unless i modify the javascript directly - not even i know where your local server is and it also wont be logged anywhere on the server.
+
+## Old Twitch only Version
+
+You can use the Twitch only version like this:
+`https://justplayerde.github.io/nuttywatch/twitch/?streamer=<YOUR TWITCH NAME>`
+
+Example: https://justplayerde.github.io/nuttywatch/twitch/?streamer=nutty
