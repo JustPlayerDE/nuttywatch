@@ -11,10 +11,11 @@ If you don't know how to self-host or how to bypass the HTTPS mixed content rest
 http://nuttywatch.justplayer.de/#socket=127.0.0.1:8080
 
 
-By default Streamer.bot will only listen on local connections, to make the chat connect from other devices (e.g. your smartwatch) you have to define another websocket server in `Server/Clients > Websocket Servers`.
-Do not change the main websocket server settings as they are required for your local widgets and obs sources to connect to your local streamerbot instance.
+By default, streamer.bot will only listen on the local (127.0.0.1) interfaces, to make this work you have to set the ip address of the websocket server to `0.0.0.0` to make it listen on all interfaces.
 
-![Streamer.bot websocket server settings example](assets/streamerbot_websocket_server_config.png?raw=true "Example of the Websocket server settings you can use.")
+![Streamer.bot websocket server example](assets/streamerbot_websocket_settings.png?raw=true "Example of the Websocket server settings you can use.")
+
+You could also try the "custom websocket server" stuff, but for me it stopped working randomly.
 
 > I do not collect nor do i use any data about you or your chat. But please keep in mind that i technically have full access to your Streamerbot instance if you use the version hosted on my own domain. I recommend hosting the files yourself on a local server instead.
 
