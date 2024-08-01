@@ -15,11 +15,19 @@
 
     <script>
       const chatContainer = document.getElementById("chat");
-      const params = new URLSearchParams(document.location.search.substring(1));
+
+      // https://stackoverflow.com/a/44169739
+      const hash = window.location.hash.substr(1);
+      const params = hash.split('&').reduce(function (res, item) {
+          var parts = item.split('=');
+          res[parts[0]] = parts[1];
+          return res;
+      }, {});
+
       const streamerbot = {
         isConnected: false,
-        remoteAddress: params.get("socket")
-          ? "ws://" + params.get("socket")
+        remoteAddress: params.socket
+          ? "ws://" + params.socket
           : "ws://localhost:8080/",
         events: {
           Twitch: [
