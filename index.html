@@ -16,7 +16,9 @@
     <script>
       // Inspired by https://github.com/izzy/stream-chat
       const chatContainer = document.getElementById("chat");
-
+      let enableAutoScroll = true;
+      let requiresScrolling = 0;
+      
       // https://stackoverflow.com/a/44169739
       const hash = window.location.hash.substr(1);
       const params = hash.split("&").reduce(function (res, item) {
@@ -42,6 +44,41 @@
           YouTube: ["Message", "MessageDeleted", "UserBanned", "SuperChat"],
         },
       };
+
+      function isElementBottomInViewport(element) {
+          const rect = element.getBoundingClientRect();
+          const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+
+          return rect.bottom <= viewportHeight;
+      }
+
+      window.addEventListener('scroll', () => {
+          if (isElementBottomInViewport(chatContainer)) {
+              console.log("The bottom of the div is in the viewport.");
+              enableAutoScroll = true;
+          } else {
+              console.log("The bottom of the div is not in the viewport.");
+              enableAutoScroll = false;
+          }
+      });
+
+      function scrollToBottom() {
+        if(!enableAutoScroll) {
+          return;
+        }
+        
+        setTimeout(() => {
+          const scrollingElement = (document.scrollingElement || document.body);
+          scrollingElement.scrollTop = scrollingElement.scrollHeight;
+        }, 0);
+      }
+
+      setInterval(() => {
+        if (requiresScrolling > 0 && enableAutoScroll) {
+          requiresScrolling--;
+          scrollToBottom();
+        }
+      }, 10)
 
       function removeChatLineById(messageId) {
         chatContainer
@@ -151,6 +188,7 @@
         chatContainer.appendChild(messageContainer);
         setTimeout(() => {
           messageContainer.classList.add("visible");
+          requiresScrolling = 100;
         }, 100);
 
         if (timeout && messageType === "system") {
