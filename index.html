@@ -213,7 +213,7 @@
         },
       };
 
-      function connect() {
+      function sbConnect() {
         socket = new WebSocket(streamerbot.remoteAddress);
 
         socket.onopen = () => {
@@ -235,7 +235,7 @@
             "Disconnected from Streamer.Bot, reconnecting in 10 seconds..."
           );
           streamerbot.isConnected = false;
-          setTimeout(connect, 10000);
+          setTimeout(sbConnect, 10000);
         };
 
         socket.onmessage = async (streamerbotMessage) => {
@@ -255,7 +255,7 @@
         function () {
           console.info("Document loaded, connecting to streamerbot...");
           addSystemMessage("status", "Connecting...", false);
-          connect();
+          sbConnect();
         },
         false
       );
