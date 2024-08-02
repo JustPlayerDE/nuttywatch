@@ -46,27 +46,28 @@
       };
 
       function isElementBottomInViewport(element) {
-          const rect = element.getBoundingClientRect();
-          const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+        const rect = element.getBoundingClientRect();
+        const viewportHeight =
+          window.innerHeight || document.documentElement.clientHeight;
 
-          return rect.bottom <= (viewportHeight * 1.05); // Allow 5% leeway
+        return rect.bottom <= viewportHeight * 1.05; // Allow 5% leeway
       }
 
-      window.addEventListener('scroll', () => {
-          if (isElementBottomInViewport(chatContainer)) {
-              enableAutoScroll = true;
-          } else {
-              enableAutoScroll = false;
-          }
+      window.addEventListener("scroll", () => {
+        if (isElementBottomInViewport(chatContainer)) {
+          enableAutoScroll = true;
+        } else {
+          enableAutoScroll = false;
+        }
       });
 
       function scrollToBottom() {
-        if(!enableAutoScroll) {
+        if (!enableAutoScroll) {
           return;
         }
-        
+
         setTimeout(() => {
-          const scrollingElement = (document.scrollingElement || document.body);
+          const scrollingElement = document.scrollingElement || document.body;
           scrollingElement.scrollTop = scrollingElement.scrollHeight;
         }, 0);
       }
@@ -76,7 +77,7 @@
           requiresScrolling--;
           scrollToBottom();
         }
-      }, 10)
+      }, 10);
 
       function removeChatLineById(messageId) {
         chatContainer
@@ -85,40 +86,39 @@
       }
 
       function htmlentities(str = "<[null string, basicly a error lol]>") {
-          return str.replace(/[\u00A0-\u9999<>\&]/gim, (i) => {
-              return '&#' + i.charCodeAt(0) + ';';
-          });
+        return str.replace(/[\u00A0-\u9999<>\&]/gim, (i) => {
+          return "&#" + i.charCodeAt(0) + ";";
+        });
       }
 
       function replaceWithEmotes(text, emotes) {
-          // Sort emotes by startIndex in descending order to avoid messing up indices
-          emotes.sort((a, b) => b.startIndex - a.startIndex);
+        // Sort emotes by startIndex in descending order to avoid messing up indices
+        emotes.sort((a, b) => b.startIndex - a.startIndex);
 
-          // Initialize an array to hold parts of the final string
-          let parts = [];
-          let lastIndex = text.length;
+        // Initialize an array to hold parts of the final string
+        let parts = [];
+        let lastIndex = text.length;
 
-          // Process each emote
-          emotes.forEach(emote => {
-              const startIndex = emote.startIndex;
-              const endIndex = emote.endIndex;
-              const imageUrl = emote.imageUrl;
+        // Process each emote
+        emotes.forEach((emote) => {
+          const startIndex = emote.startIndex;
+          const endIndex = emote.endIndex;
+          const imageUrl = emote.imageUrl;
 
-              // Push the text after the current emote
-              parts.unshift(htmlentities(text.slice(endIndex + 1, lastIndex)));
-              // Push the image tag
-              parts.unshift(`<img src="${imageUrl}" alt="${emote.name}">`);
-              // Update the lastIndex to the start of the current emote
-              lastIndex = startIndex;
-          });
+          // Push the text after the current emote
+          parts.unshift(htmlentities(text.slice(endIndex + 1, lastIndex)));
+          // Push the image tag
+          parts.unshift(`<img src="${imageUrl}" alt="${emote.name}">`);
+          // Update the lastIndex to the start of the current emote
+          lastIndex = startIndex;
+        });
 
-          // Add the remaining part of the text before the first emote
-          parts.unshift(htmlentities(text.slice(0, lastIndex)));
+        // Add the remaining part of the text before the first emote
+        parts.unshift(htmlentities(text.slice(0, lastIndex)));
 
-          // Join all parts to form the final string
-          return parts.join('');
+        // Join all parts to form the final string
+        return parts.join("");
       }
-
 
       function addMessage(
         id,
@@ -234,11 +234,13 @@
             const chatMessage = event.data.message;
             console.debug(chatMessage);
             let messageText = htmlentities(chatMessage.message);
-            
-            if(chatMessage.emotes.length > 0) {
-              messageText = replaceWithEmotes(chatMessage.message, chatMessage.emotes)
-            }
 
+            if (chatMessage.emotes.length > 0) {
+              messageText = replaceWithEmotes(
+                chatMessage.message,
+                chatMessage.emotes
+              );
+            }
 
             addMessage(
               chatMessage.msgId,
@@ -264,7 +266,7 @@
 
           if (event.event.type === "Message") {
             console.groupCollapsed("Chat Message");
-            console.debug(event, event.data)
+            console.debug(event, event.data);
 
             addMessage(
               event.data.eventId,
@@ -342,10 +344,13 @@
           console.info("Document loaded, connecting to streamerbot...");
           sbConnect();
 
-          if(params.test) {
-            addSystemMessage("test", "Testing is enabled, adding random messages.", false)
+          if (params.test) {
+            addSystemMessage(
+              "test",
+              "Testing is enabled, adding random messages.",
+              false
+            );
 
-          
             function randomMessage() {
               addMessage(
                 (Math.random() + 1).toString(36).substring(7),
@@ -358,7 +363,7 @@
                 []
               );
 
-              setTimeout(randomMessage, Math.floor(Math.random() * 3000))
+              setTimeout(randomMessage, Math.floor(Math.random() * 3000));
             }
 
             randomMessage();
@@ -368,18 +373,32 @@
       );
 
       // https://mikevdv.dev/blog/2022-06-23-stop-the-screen-going-to-sleep-with-javascript
-      const canWakeLock = () => 'wakeLock' in navigator;
+      const canWakeLock = () => "wakeLock" in navigator;
       let wakelock;
       async function lockWakeState() {
-        if(!canWakeLock()) return;
+        if (!canWakeLock()) {
+          addSystemMessage("lock", "Awake Lock not supported :(");
+        };
         try {
           wakelock = await navigator.wakeLock.request();
-          wakelock.addEventListener('release', () => {
-            console.log('Screen Wake State Locked:', !wakelock.released);
+          wakelock.addEventListener("release", () => {
+            if (!wakelock.released) {
+              addSystemMessage("lock", "Awake Lock Enabled");
+            } else {
+              addSystemMessage("lock", "Awake Lock Disabled");
+            }
+            console.log("Screen Wake State Locked:", !wakelock.released);
           });
-          console.log('Screen Wake State Locked:', !wakelock.released);
-        } catch(e) {
-          console.error('Failed to lock wake state with reason:', e.message);
+
+          if (!wakelock.released) {
+            addSystemMessage("lock", "Awake Lock Enabled");
+          } else {
+            addSystemMessage("lock", "Awake Lock Disabled");
+          }
+          console.log("Screen Wake State Locked:", !wakelock.released);
+        } catch (e) {
+          addSystemMessage("lock", "Could not request Awake Lock :/");
+          console.error("Failed to lock wake state with reason:", e.message);
         }
       }
 
