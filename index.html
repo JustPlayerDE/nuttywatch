@@ -268,7 +268,7 @@
             const chatMessage = event.data.message ?? "[<no message?! did i do it wrong?>]";
 
             addMessage(
-              chatMessage.eventId,
+              event.data.eventId,
               htmlentities(chatMessage.message),
               {
                 name: event.data.user.name,
