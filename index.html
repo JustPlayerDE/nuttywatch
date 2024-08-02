@@ -264,7 +264,7 @@
 
           if (event.event.type === "Message") {
             console.groupCollapsed("Chat Message");
-            const chatMessage = event.data.message;
+            const chatMessage = event.data.message ?? "[<no message?! did i do it wrong?>]";
 
             addMessage(
               chatMessage.eventId,
