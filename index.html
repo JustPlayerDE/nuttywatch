@@ -84,7 +84,7 @@
           .forEach((n) => chatContainer.removeChild(n));
       }
 
-      function htmlentities(str) {
+      function htmlentities(str = "<[null string, basicly a error lol]>") {
           return str.replace(/[\u00A0-\u9999<>\&]/gim, (i) => {
               return '&#' + i.charCodeAt(0) + ';';
           });
@@ -264,6 +264,7 @@
 
           if (event.event.type === "Message") {
             console.groupCollapsed("Chat Message");
+            console.debug(event, event.data)
             const chatMessage = event.data.message ?? "[<no message?! did i do it wrong?>]";
 
             addMessage(
