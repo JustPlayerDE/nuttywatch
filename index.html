@@ -265,11 +265,10 @@
           if (event.event.type === "Message") {
             console.groupCollapsed("Chat Message");
             console.debug(event, event.data)
-            const chatMessage = event.data.message ?? "[<no message?! did i do it wrong?>]";
 
             addMessage(
               event.data.eventId,
-              htmlentities(chatMessage.message),
+              htmlentities(event.data.message),
               {
                 name: event.data.user.name,
                 id: event.data.user.id,
