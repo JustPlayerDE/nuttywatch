@@ -271,8 +271,8 @@
               chatMessage.eventId,
               htmlentities(chatMessage.message),
               {
-                name: chatMessage.user.name,
-                id: chatMessage.user.id,
+                name: event.data.user.name,
+                id: event.data.user.id,
               },
               null,
               [
