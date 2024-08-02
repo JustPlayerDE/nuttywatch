@@ -397,7 +397,7 @@
           }
           console.log("Screen Wake State Locked:", !wakelock.released);
         } catch (e) {
-          addSystemMessage("lock", "Could not request Awake Lock :/");
+          addSystemMessage("lock", "Could not request Awake Lock: " + e.message + ". Watch will not obey my rules.");
           console.error("Failed to lock wake state with reason:", e.message);
         }
       }
