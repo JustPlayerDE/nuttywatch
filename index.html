@@ -378,38 +378,6 @@
         },
         false
       );
-
-      // https://mikevdv.dev/blog/2022-06-23-stop-the-screen-going-to-sleep-with-javascript
-      const canWakeLock = () => "wakeLock" in navigator;
-      let wakelock;
-      async function lockWakeState() {
-        if (!canWakeLock()) {
-          addSystemMessage("lock", "Awake Lock not supported :(");
-        };
-        try {
-          wakelock = await navigator.wakeLock.request();
-          wakelock.addEventListener("release", () => {
-            if (!wakelock.released) {
-              addSystemMessage("lock", "Awake Lock Enabled");
-            } else {
-              addSystemMessage("lock", "Awake Lock Disabled");
-            }
-            console.log("Screen Wake State Locked:", !wakelock.released);
-          });
-
-          if (!wakelock.released) {
-            addSystemMessage("lock", "Awake Lock Enabled");
-          } else {
-            addSystemMessage("lock", "Awake Lock Disabled");
-          }
-          console.log("Screen Wake State Locked:", !wakelock.released);
-        } catch (e) {
-          addSystemMessage("lock", "Could not request Awake Lock: " + e.message + ". Watch will not obey my rules.");
-          console.error("Failed to lock wake state with reason:", e.message);
-        }
-      }
-
-      lockWakeState();
     </script>
   </body>
 </html>
