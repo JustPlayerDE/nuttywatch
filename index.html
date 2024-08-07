@@ -192,8 +192,8 @@
           requiresScrolling = 100;
         }, 100);
 
-        while (enableAutoScroll && !scrolling && chatEle.childElementCount > 50) {
-          chatEle.removeChild(chatEle.children[0]);
+        while (enableAutoScroll && !scrolling && chatContainer.childElementCount > 50) {
+          chatContainer.removeChild(chatContainer.children[0]);
         }
 
         if (timeout && messageType === "system") {
