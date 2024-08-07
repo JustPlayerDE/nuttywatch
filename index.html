@@ -17,6 +17,7 @@
       // Inspired by https://github.com/izzy/stream-chat
       const chatContainer = document.getElementById("chat");
       let enableAutoScroll = true;
+      let scrolling = false;
       let requiresScrolling = 0;
 
       // https://stackoverflow.com/a/44169739
@@ -54,15 +55,17 @@
       }
 
       window.addEventListener("scroll", () => {
+        scrolling = true;
         if (isElementBottomInViewport(chatContainer)) {
           enableAutoScroll = true;
         } else {
           enableAutoScroll = false;
         }
+        scrolling = false;
       });
 
       function scrollToBottom() {
-        if (!enableAutoScroll) {
+        if (!enableAutoScroll || scrolling) {
           return;
         }
 
@@ -188,6 +191,10 @@
           messageContainer.classList.add("visible");
           requiresScrolling = 100;
         }, 100);
+
+        while (enableAutoScroll && !scrolling && chatEle.childElementCount > 50) {
+          chatEle.removeChild(chatEle.children[0]);
+        }
 
         if (timeout && messageType === "system") {
           setTimeout(() => {
